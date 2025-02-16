@@ -1,85 +1,119 @@
-ARG UBUNTU_VERSION=22.04
-ARG NVIDIA_CUDA_VERSION=12.6.1
+FROM nvidia/cuda:11.0.3-devel-ubuntu20.04
 
-#
-# Docker builder stage.
-#
-FROM nvidia/cuda:${NVIDIA_CUDA_VERSION}-devel-ubuntu${UBUNTU_VERSION} as builder
 
-ARG COLMAP_GIT_COMMIT=main
-ARG CUDA_ARCHITECTURES=native
-ENV QT_XCB_GL_INTEGRATION=xcb_egl
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install -y tzdata
 
-# Prevent stop building ubuntu at time zone selection.
-ENV DEBIAN_FRONTEND=noninteractive
-
-COPY ./ /opt/
-
-RUN ./opt/setup-ubuntu.sh
-
-# Prepare and empty machine for building.
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends --no-install-suggests \
-        git \
-        cmake \
-        ninja-build \
-        build-essential \
-        libboost-program-options-dev \
-        libboost-graph-dev \
-        libboost-system-dev \
-        libeigen3-dev \
-        libflann-dev \
-        libfreeimage-dev \
-        libmetis-dev \
-        libgoogle-glog-dev \
-        libgtest-dev \
-        libgmock-dev \
-        libsqlite3-dev \
-        libglew-dev \
-        qtbase5-dev \
-        libqt5opengl5-dev \
-        libcgal-dev \
-        libceres-dev \
-        libcurl4-openssl-dev
+       apt-get install -y --no-install-recommends \
+       apt-transport-https \
+       apt-utils \
+       automake \
+       build-essential \
+       bzip2 \
+       ca-certificates \
+       cmake \
+       curl \
+       git \
+       freeglut3-dev \
+       libcgal-dev \
+       libatlas-base-dev \
+       libsuitesparse-dev \
+       libboost-all-dev \
+       libgeotiff-dev \
+       libboost-all-dev \
+       libeigen3-dev \
+       libsuitesparse-dev \
+       libfreeimage-dev \
+       libgoogle-glog-dev \
+       libgflags-dev \
+       libglew-dev \
+       libhdf5-dev \
+       libhwloc-dev \
+       libjemalloc-dev \
+       libjpeg-dev \
+       libmetis-dev \
+       libmpich-dev \
+       libopenexr-dev \
+       libopenimageio-dev \
+       libproj-dev \
+       libsuitesparse-dev \
+       librocksdb-dev \
+       libtbb2 \
+       libtbb-dev \
+       libtiff5-dev \
+       libtool \
+       libcurl4-gnutls-dev \
+       libopenmpi-dev \
+       libwebp-dev \
+       libqt5opengl5-dev \
+       make \
+       mercurial \
+       mpich \
+       pkg-config \
+       rapidjson-dev \
+       software-properties-common \
+       subversion \
+       zlib1g-dev \
+       cifs-utils \
+       nfs-common \
+       openssh-client \
+       openssh-server \
+       net-tools \
+       qtbase5-dev \
+       sshpass  \
+       vim \
+       wget && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Build and install COLMAP.
-RUN git clone https://github.com/colmap/colmap.git
-RUN cd colmap && \
-    git fetch https://github.com/colmap/colmap.git ${COLMAP_GIT_COMMIT} && \
-    git checkout FETCH_HEAD && \
+# googletest
+#
+RUN git clone https://github.com/google/googletest.git && \
+      cd  googletest && \
+      cmake . && \
+      make install && \
+      cd .. && \
+      rm -r googletest
+#
+# ceres-solver
+#
+RUN git clone https://github.com/ceres-solver/ceres-solver.git && \
+      cd ceres-solver && \
+      git checkout 1.14.0 && \
+      mkdir ceres-bin && \
+      cd ceres-bin && \
+      cmake CXXFLAGS=-stc=c++11 .. \
+        -DBUILD_TESTING=OFF \
+        -DBUILD_DOCUMENTATION=OFF \
+        -DBUILD_EXAMPLES=OFF \
+        -DBUILD_SHARED_LIBS=ON && \
+    make CXXFLAGS=-stc=c++11 -j4 && \
+    make install && \
+    cd ../.. && \
+    rm -r ceres-solver
+
+##TheiaSfM
+#
+RUN git clone https://github.com/sweeneychris/TheiaSfM.git && \
+    cd TheiaSfM && \
     mkdir build && \
     cd build && \
-    cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES} \
-        -DCMAKE_INSTALL_PREFIX=/colmap-install && \
-    ninja install
+    cmake CXXFLAGS=-std=c++11 .. && \
+    make CXXFLAGS=-std=c++11 -j4 && \
+    make install && \
+    cd ../
 
 #
-# Docker runtime stage.
+#COLMAP
 #
-FROM nvidia/cuda:${NVIDIA_CUDA_VERSION}-runtime-ubuntu${UBUNTU_VERSION} as runtime
-
-# Minimal dependencies to run COLMAP binary compiled in the builder stage.
-# Note: this reduces the size of the final image considerably, since all the
-# build dependencies are not needed.
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends --no-install-suggests \
-        libboost-program-options1.74.0 \
-        libc6 \
-        libceres2 \
-        libfreeimage3 \
-        libgcc-s1 \
-        libgl1 \
-        libglew2.2 \
-        libgoogle-glog0v5 \
-        libqt5core5a \
-        libqt5gui5 \
-        libqt5widgets5 \
-        libcurl4
-
-# Copy all files from /colmap-install/ in the builder stage to /usr/local/ in
-# the runtime stage. This simulates installing COLMAP in the default location
-# (/usr/local/), which simplifies environment variables. It also allows the user
-# of this Docker image to use it as a base image for compiling against COLMAP as
-# a library. For instance, CMake will be able to find COLMAP easily with the
-# command: find_package(COLMAP REQUIRED).
-COPY --from=builder /colmap-install/ /usr/local/
+RUN git clone https://github.com/colmap/colmap.git && \
+      cd colmap && \
+      mkdir build && \
+      cd build && \
+      cmake CXXFLAGS=-std=c++11 .. && \
+      make CXXFLAGS=-std=c++11 -j4 && \
+      make install && \
+      cd ..
+##
+# Set the LD_LIBRARY_PATH
+##
+ENV LD_LIBRARY_PATH = "/usr/local/lib"
