@@ -1,119 +1,43 @@
-FROM nvidia/cuda:11.0.3-devel-ubuntu20.04
+FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
 
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="America/New_York" apt-get install -y tzdata
+ARG COLMAP_VERSION=3.9
+ARG CUDA_ARCHITECTURES=70
+ENV QT_XCB_GL_INTEGRATION=xcb_egl
 
-RUN apt-get update && \
-       apt-get install -y --no-install-recommends \
-       apt-transport-https \
-       apt-utils \
-       automake \
-       build-essential \
-       bzip2 \
-       ca-certificates \
-       cmake \
-       curl \
-       git \
-       freeglut3-dev \
-       libcgal-dev \
-       libatlas-base-dev \
-       libsuitesparse-dev \
-       libboost-all-dev \
-       libgeotiff-dev \
-       libboost-all-dev \
-       libeigen3-dev \
-       libsuitesparse-dev \
-       libfreeimage-dev \
-       libgoogle-glog-dev \
-       libgflags-dev \
-       libglew-dev \
-       libhdf5-dev \
-       libhwloc-dev \
-       libjemalloc-dev \
-       libjpeg-dev \
-       libmetis-dev \
-       libmpich-dev \
-       libopenexr-dev \
-       libopenimageio-dev \
-       libproj-dev \
-       libsuitesparse-dev \
-       librocksdb-dev \
-       libtbb2 \
-       libtbb-dev \
-       libtiff5-dev \
-       libtool \
-       libcurl4-gnutls-dev \
-       libopenmpi-dev \
-       libwebp-dev \
-       libqt5opengl5-dev \
-       make \
-       mercurial \
-       mpich \
-       pkg-config \
-       rapidjson-dev \
-       software-properties-common \
-       subversion \
-       zlib1g-dev \
-       cifs-utils \
-       nfs-common \
-       openssh-client \
-       openssh-server \
-       net-tools \
-       qtbase5-dev \
-       sshpass  \
-       vim \
-       wget && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Prevent stop building ubuntu at time zone selection.  
+ENV DEBIAN_FRONTEND=noninteractive
 
-# googletest
-#
-RUN git clone https://github.com/google/googletest.git && \
-      cd  googletest && \
-      cmake . && \
-      make install && \
-      cd .. && \
-      rm -r googletest
-#
-# ceres-solver
-#
-RUN git clone https://github.com/ceres-solver/ceres-solver.git && \
-      cd ceres-solver && \
-      git checkout 1.14.0 && \
-      mkdir ceres-bin && \
-      cd ceres-bin && \
-      cmake CXXFLAGS=-stc=c++11 .. \
-        -DBUILD_TESTING=OFF \
-        -DBUILD_DOCUMENTATION=OFF \
-        -DBUILD_EXAMPLES=OFF \
-        -DBUILD_SHARED_LIBS=ON && \
-    make CXXFLAGS=-stc=c++11 -j4 && \
-    make install && \
-    cd ../.. && \
-    rm -r ceres-solver
+# Prepare and empty machine for building.
+RUN apt-get update && apt-get install -y \
+    git \
+    cmake \
+    ninja-build \
+    build-essential \
+    libboost-program-options-dev \
+    libboost-filesystem-dev \
+    libboost-graph-dev \
+    libboost-system-dev \
+    libeigen3-dev \
+    libflann-dev \
+    libfreeimage-dev \
+    libmetis-dev \
+    libgoogle-glog-dev \
+    libgtest-dev \
+    libsqlite3-dev \
+    libglew-dev \
+    qtbase5-dev \
+    libqt5opengl5-dev \
+    libcgal-dev \
+    libceres-dev
 
-##TheiaSfM
-#
-RUN git clone https://github.com/sweeneychris/TheiaSfM.git && \
-    cd TheiaSfM && \
+# Build and install COLMAP.
+RUN git clone https://github.com/colmap/colmap.git
+RUN cd colmap && \
+    git checkout tags/${COLMAP_VERSION} -b ${COLMAP_VERSION}-branch && \
     mkdir build && \
     cd build && \
-    cmake CXXFLAGS=-std=c++11 .. && \
-    make CXXFLAGS=-std=c++11 -j4 && \
-    make install && \
-    cd ../
-
-#
-#COLMAP
-#
-RUN git clone https://github.com/colmap/colmap.git && \
-      cd colmap && \
-      mkdir build && \
-      cd build && \
-      cmake CXXFLAGS=-std=c++11 .. && \
-      make CXXFLAGS=-std=c++11 -j4 && \
-      make install && \
-      cd ..
-##
-# Set the LD_LIBRARY_PATH
-##
-ENV LD_LIBRARY_PATH = "/usr/local/lib"
+    cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES} && \
+    ninja && \
+    ninja install && \
+    cd .. && rm -rf colmap
