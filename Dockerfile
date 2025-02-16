@@ -13,6 +13,7 @@ ENV QT_XCB_GL_INTEGRATION=xcb_egl
 # Prevent stop building ubuntu at time zone selection.
 ENV DEBIAN_FRONTEND=noninteractive
 
+COPY ./ /opt/code
 
 RUN ./setup-ubuntu.sh
 
