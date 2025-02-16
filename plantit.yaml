@@ -1,4 +1,4 @@
-name: 3D_reconstruction_pipeline
+name: 3d_colmap
 author: Suxing Liu
 image: docker://colmap/colmap
 public: True
