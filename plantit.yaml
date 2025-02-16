@@ -1,0 +1,27 @@
+name: 3D_reconstruction_pipeline
+author: Suxing Liu
+image: docker://colmap/colmap
+public: True
+  
+commands: - colmap feature_extractor --database_path $OUTPUT/database.db --image_path $INPUT/ --SiftExtraction.gpu_index=0
+
+
+input:
+  path:
+  kind: directory
+  filetypes:
+    - jpg
+    - png
+output:
+  path:
+  include:
+    patterns:
+      - db
+
+gpu: True
+
+jobqueue:
+  walltime: "240:00:00"
+  memory: "48GB"
+  processes: 1
+  cores: 1
