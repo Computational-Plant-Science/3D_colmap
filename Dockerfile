@@ -13,9 +13,9 @@ ENV QT_XCB_GL_INTEGRATION=xcb_egl
 # Prevent stop building ubuntu at time zone selection.
 ENV DEBIAN_FRONTEND=noninteractive
 
-COPY ./ /opt/code
+COPY ./ /opt/
 
-RUN ./setup-ubuntu.sh
+RUN ./opt/setup-ubuntu.sh
 
 # Prepare and empty machine for building.
 RUN apt-get update && \
