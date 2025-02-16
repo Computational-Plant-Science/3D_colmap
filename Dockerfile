@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install -y \
     libcgal-dev \
     libceres-dev
 
+
+
 # Build and install COLMAP.
 RUN git clone https://github.com/colmap/colmap.git
 RUN cd colmap && \
@@ -41,3 +43,8 @@ RUN cd colmap && \
     ninja && \
     ninja install && \
     cd .. && rm -rf colmap
+
+
+
+COPY . /opt/code
+WORKDIR /opt/code
