@@ -1,8 +1,5 @@
 # 3D modeing pipeline using Colmap
 
-# Note: This repo was to replace the old one "Computational-Plant-Science/3D_model_reconstruction_demo"
-which has compatible issue after HPC Puma upgraded to new OS sysytem. 
-
 Pipeline: Build 3D root models from images captured by 3D root scanner.
 
 This repo was to Reconstruct a 3D point cloud root model from images.
@@ -144,3 +141,5 @@ and
 https://github.com/Graffity-Technologies/colmap-docker
 
 
+# Note: 
+This repo was to replace the old one "Computational-Plant-Science/3D_model_reconstruction_demo" which has compatible issue after HPC Puma upgraded to new OS sysytem. 
