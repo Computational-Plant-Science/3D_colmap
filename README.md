@@ -77,7 +77,7 @@ There are several configurable values for colmap's patch matching step during de
 - `--window_radius`: patch window radius, defaults to `5`
 - `--num_iterations`: number of patch match iterations, defaults to `5`
 - `--num_samples`: number of sampled views, defaults to `15`
-- `--geom_consistency`: whether to perform geometric dense reconstruction, defaults to `False`
+- `--geom_consistency`: whether to perform geometric dense reconstruction, defaults to `True`
 
 ## Visualizing a 3D point cloud
 
