@@ -45,6 +45,6 @@ RUN cd colmap && \
     cd .. && rm -rf colmap
 
 
-
+# Copy all files into the docker container
 COPY . /opt/code
 WORKDIR /opt/code

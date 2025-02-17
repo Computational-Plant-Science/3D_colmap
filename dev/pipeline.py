@@ -21,6 +21,9 @@ Arguments:
 ("--num_samples", required=False, type=int, default=10, help="Colmap patch match sampled views")
 ("--geom_consistency", required=False, type=str2bool, nargs='?', const=True, default=False, help="Colmap geometric reconstruction")
 """
+
+
+
 from distutils import util
 import multiprocessing
 import subprocess

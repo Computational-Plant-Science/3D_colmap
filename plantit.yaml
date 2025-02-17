@@ -3,7 +3,7 @@ author: Suxing Liu
 image: docker://computationalplantscience/3d_colmap
 public: True
   
-commands: python3 /opt/code/pipeline.py -i $INPUT -o $OUTPUT -g $GPUS -d $([ $GPUS -gt 0 ] && echo "COLMAP" || echo "PMVS") 
+commands: /opt/code/colmap_pipeline.sh
 
 
 input:
