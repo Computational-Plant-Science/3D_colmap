@@ -36,7 +36,7 @@ colmap patch_match_stereo \
 	--PatchMatchStereo.window_radius=3 \
 	--PatchMatchStereo.num_iterations=3 \
 	--PatchMatchStereo.num_samples=10 \
-    --PatchMatchStereo.geom_consistency False \
+    --PatchMatchStereo.geom_consistency True \
 	--PatchMatchStereo.gpu_index=0
 
 
