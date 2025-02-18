@@ -102,16 +102,6 @@ Currently this software does not support model visualization. PLY files can be v
 This software is built on top of COLMAP, Recommended dependencies: CUDA (at least version 7.X).
 
 
-### VisualSFM
-[Anders Damsgaard](mailto:adamsgaard@ucsd.edu) with contributions by Caleb Adams and Connor P Doherty.
-Changchang Wu ( wucc1130@gmail.com )
-+ Structure from Motion
-[1] Changchang Wu, "Towards Linear-time Incremental Structure From Motion", 3DV 2013
-[2] Changchang Wu, "VisualSFM: A Visual Structure from Motion System", http://ccwu.me/vsfm/, 2011
-+ Bundle Adjustment
-[3] Changchang Wu, Sameer Agarwal, Brian Curless, and Steven M. Seitz, "Multicore Bundle Adjustment", CVPR 2011   
-+ Feature Detection
-[4] Changchang Wu, "SiftGPU: A GPU implementation of Scale Invaraint Feature Transform (SIFT)", http://cs.unc.edu/~ccwu/siftgpu, 2007
 
 ### COLMAP
 https://colmap.github.io
@@ -131,15 +121,11 @@ Author: Johannes L. Schoenberger (jsch-at-demuc-dot-de)
 }
 
 # Author
-Suxing Liu (suxingliu@gmail.com), Wesley Paul Bonelli(wbonelli@uga.edu)
+Suxing Liu (suxingliu@gmail.com)
 
 ## Other contributions
 
 Docker container was maintained and deployed to [PlantIT](https://portnoy.cyverse.org) by Wes Bonelli (wbonelli@uga.edu).
-
-Singularity container overlay issues were solved by [Saravanaraj Ayyampalayam] (https://github.com/raj76) (mailto:raj76@uga.edu)
-
-Special thanks to Chris Cotter building the Singularity container recipe for testing and debugging.
 
 # License
 GNU Public License
