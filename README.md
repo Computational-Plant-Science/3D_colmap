@@ -2,13 +2,26 @@
 
 Pipeline: Build 3D root models from images captured by 3D root scanner.
 
-This repo was to Reconstruct a 3D point cloud root model from images.
+This repo was to reconstruct a 3D point cloud root model from images captured by our 3D root scanner or portable scanner in the field.
  
-For example, a real root and a reconstruction, side by side:
+For example, images are captured by our 3D root scanner with 10 cameras mouting on a rotating arm. 
 
 ![3D root scanner prototype](../main/media/3D_scanner.gif)
 
+a real root sample and its 3D reconstruction point cloud model was compared side by side:
+
 ![3D root model reconstruction](../main/media/3D_model.gif)
+
+
+Our upgraded portable scanner can capture around 240 images in 7 mins:
+
+![portable scanner](../main/media/portable_3D_scanner.jpg)
+
+and build 3D point cloud models based on only these 240 images. 
+
+![3D point cloud models](../main/media/bean_root.png)
+
+
     
 # Installation
 
@@ -20,24 +33,25 @@ Pull an image or a repository from a registry
 ```shell
 docker pull computationalplantscience/3d_colmap
 ```
-Mount the current working directory and open an interactive shell:
+Mount the current working directory "/opt/dev" and open an interactive shell:
 
 ```shell
 docker run -it -v $(pwd):/opt/dev -w /opt/dev computationalplantscience/3d_colmap bash
 ```
 
-This docker container was compiled based on nvidia/cuda:12.2.2-devel-ubuntu22.04, and support GPU running under HPC singulariy environment. 
+This docker container was compiled based on nvidia/cuda:12.2.2-devel-ubuntu22.04, and support GPU running under HPC singulariy environment. This docker was tested on GPU node in Puma HPC. 
+
+It will automatically detect the CPU and GPU architectures, if GPU was detected, it will use CUDA to speed up. 
 
 COLMAP_VERSION=3.9
+
 CUDA_ARCHITECTURES=70
 
 The Docker recipe file was in "Dockerfile", and DockerHub (computationalplantscience/3d_colmap) was setup linked to this repo directly and in automatic trigger compile mode.
  
-
 The Colmap pipeline was in bash file "colmap_pipeline.sh"
 
 
-This docker was tested on GPU node in Puma HPC. 
 
 
 
