@@ -1,3 +1,7 @@
+# Summary: 3D reconstruction pipeline using Colmap based on CUP or GPU on HPC(Puma)
+# Author: Suxing Liu
+# Create date: 02202025
+
 # feature extraction
 colmap feature_extractor \
    --database_path $OUTPUT/database.db \

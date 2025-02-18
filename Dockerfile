@@ -1,6 +1,11 @@
+# Summary: 3D reconstruction pipeline using Colmap based on CUP or GPU on HPC(Puma)
+# Author: Suxing Liu
+# Create date: 02202025
+
+
 FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
 
-
+# setup Colmap version and CUDA version for ubuntu22.04
 ARG COLMAP_VERSION=3.9
 ARG CUDA_ARCHITECTURES=70
 ENV QT_XCB_GL_INTEGRATION=xcb_egl
@@ -8,7 +13,7 @@ ENV QT_XCB_GL_INTEGRATION=xcb_egl
 # Prevent stop building ubuntu at time zone selection.  
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Prepare and empty machine for building.
+# Prepare and empty machine for building
 RUN apt-get update && apt-get install -y \
     git \
     cmake \
@@ -33,7 +38,7 @@ RUN apt-get update && apt-get install -y \
 
 
 
-# Build and install COLMAP.
+# Build and install COLMAP
 RUN git clone https://github.com/colmap/colmap.git
 RUN cd colmap && \
     git checkout tags/${COLMAP_VERSION} -b ${COLMAP_VERSION}-branch && \
