@@ -69,7 +69,7 @@ singularity shell docker://computationalplantscience/3d_colmap
 
 ## Reconstructing a 3D point cloud
 
-To reconstruct a point cloud from an image set, use `pipeline.py` as such:
+To reconstruct a point cloud from an image set, use `colmap_pipeline.sh` as such:
 
 ```shell
     ./colmap_pipeline.sh
@@ -148,11 +148,7 @@ GNU Public License
 
 This docker recipe was developed based on COLMAP official documents:
 
-https://github.com/colmap/colmap/tree/main/docker
-
-and 
-
-https://github.com/Graffity-Technologies/colmap-docker
+https://github.com/colmap/colmap/tree/main/docker  &&  https://github.com/Graffity-Technologies/colmap-docker
 
 
 # Note: 
