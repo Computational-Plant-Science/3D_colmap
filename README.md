@@ -39,7 +39,7 @@ Mount the current working directory "/opt/dev" and open an interactive shell:
 docker run -it -v $(pwd):/opt/dev -w /opt/dev computationalplantscience/3d_colmap bash
 ```
 
-This docker container was compiled based on nvidia/cuda:12.2.2-devel-ubuntu22.04, and support GPU running under HPC singulariy environment. This docker was tested on GPU node in Puma HPC. 
+This docker container was compiled based on nvidia/cuda:12.2.2-devel-ubuntu22.04, and supports GPU running under HPC Singularity environment. This docker was tested on GPU node in Puma HPC. 
 
 It will automatically detect the CPU and GPU architectures, if GPU was detected, it will use CUDA to speed up. 
 
@@ -134,7 +134,7 @@ GNU Public License
 
 This docker recipe was developed based on COLMAP official documents:
 
-https://github.com/colmap/colmap/tree/main/docker  &&  https://github.com/Graffity-Technologies/colmap-docker
+https://github.com/colmap/colmap/tree/main/docker  
 
 
 # Note: 
