@@ -1,3 +1,6 @@
+# Author: Suxing Liu
+# Create date: 02202025
+
 
 # specify the correct gpu and cuda compute architecture
 ARG UBUNTU_VERSION=22.04
