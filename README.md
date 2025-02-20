@@ -39,13 +39,13 @@ Mount the current working directory "/opt/dev" and open an interactive shell:
 docker run -it -v $(pwd):/opt/dev -w /opt/dev computationalplantscience/3d_colmap bash
 ```
 
-This docker container was compiled based on nvidia/cuda:12.2.2-devel-ubuntu22.04, and supports GPU running under HPC Singularity environment. This docker was tested on GPU node in Puma HPC. 
+This docker container was compiled based on nvidia/cuda:12.2.2-devel-ubuntu22.04, and supports GPU running under HPC Singularity environment. 
 
-It will automatically detect the CPU and GPU architectures, if GPU was detected, it will use CUDA to speed up. 
+This docker was tested on GPU node in Puma HPC. It will automatically detect the CPU and GPU nodes, if GPU was detected, it will use CUDA to speed up. 
 
-COLMAP_VERSION=3.9
+We needs a CUDA_ARCH_BIN flag to be set in order to compile the binaries with the correct CUDA architecture. 
 
-CUDA_ARCHITECTURES=70
+If this flag is not set correctly, the final use of the binaries would fail. [Reference NVIDIA Developer Program (Your GPU Compute Capability)](https://developer.nvidia.com/cuda-gpus)
 
 The Docker recipe file was in "Dockerfile", and DockerHub (computationalplantscience/3d_colmap) was setup linked to this repo directly and in automatic trigger compile mode.
  
