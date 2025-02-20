@@ -1,5 +1,5 @@
 
-
+# specify the correct gpu and cuda compute architecture
 ARG UBUNTU_VERSION=22.04
 ARG NVIDIA_CUDA_VERSION=12.6.1
 
