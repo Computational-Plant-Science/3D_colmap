@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-name: DIRT/3D-Reconstruction
-=======
 name: DIRT\3D-Reconstruction
->>>>>>> 7ff9e05f7c21bd4501c9c1cfbd717681ff693a3b
 author: Suxing Liu
 image: docker://computationalplantscience/3d_colmap
 public: True
