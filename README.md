@@ -120,15 +120,15 @@ Author: Johannes L. Schoenberger (jsch-at-demuc-dot-de)
     year={2016},
 }
 ### OUR COLMAP ROOT PHENOTYPING PAPER
-@article{https://doi.org/10.1002/ppj2.20068,
+@article{Liu2023,
 author = {Liu, Suxing and Bonelli, Wesley Paul and Pietrzyk, Peter and Bucksch, Alexander},
 title = {Comparison of open-source three-dimensional reconstruction pipelines for maize-root phenotyping},
 journal = {The Plant Phenome Journal},
 volume = {6},
 number = {1},
 pages = {e20068},
-doi = {https://doi.org/10.1002/ppj2.20068}
-year = {2023}
+doi = {https://doi.org/10.1002/ppj2.20068},
+year = {2023},
 }
 
 # Author
