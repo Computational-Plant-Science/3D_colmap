@@ -8,10 +8,6 @@ For example, images are captured by our 3D root scanner with 10 cameras mouting 
 
 ![3D root scanner prototype](../main/media/3D_scanner.gif)
 
-a real root sample and its 3D reconstruction point cloud model was compared side by side:
-
-![3D root model reconstruction](../main/media/3D_model.gif)
-
 
 Our upgraded portable scanner can capture around 240 images in 7 mins:
 
@@ -123,13 +119,20 @@ Author: Johannes L. Schoenberger (jsch-at-demuc-dot-de)
     booktitle={European Conference on Computer Vision (ECCV)},
     year={2016},
 }
+### OUR COLMAP ROOT PHENOTYPING PAPER
+@article{Liu2023,
+author = {Liu, Suxing and Bonelli, Wesley Paul and Pietrzyk, Peter and Bucksch, Alexander},
+title = {Comparison of open-source three-dimensional reconstruction pipelines for maize-root phenotyping},
+journal = {The Plant Phenome Journal},
+volume = {6},
+number = {1},
+pages = {e20068},
+doi = {https://doi.org/10.1002/ppj2.20068},
+year = {2023},
+}
 
 # Author
 Suxing Liu (suxingliu@gmail.com)
-
-## Other contributions
-
-Docker container was maintained and deployed to [PlantIT](https://portnoy.cyverse.org) by Wes Bonelli (wbonelli@ucar.edu).
 
 # License
 GNU Public License
